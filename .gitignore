@@ -64,7 +64,7 @@ bin
 build
 !/**/src/**/bin
 !/**/src/**/build
-!/**/src/**/application.properties
+src/main/resources/application.properties
 build.log
 dependency-reduced-pom.xml
 dump.rdb
