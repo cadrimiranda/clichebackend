@@ -14,15 +14,31 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    
+
+    @MutationMapping
+    public User createUser(@Argument("email") String email, @Argument("password") String password) {
+        return userService.createUser(new User(email, password));
+    }
+
     @QueryMapping
     public User userById(@Argument("id") String id) {
         return userService.getUserById(id);
     }
-    
+
+    @QueryMapping
+    public User userByEmail(@Argument("email") String email) {
+        return userService.getUserByEmail(email);
+    }
+
     @MutationMapping
-    public User createUser(@Argument("email") String email, @Argument("password") String password) {
-        return userService.createUser(new User(email, password));
+    public User updateUser(@Argument("id") String id, @Argument("email") String email,
+            @Argument("password") String password) {
+        return userService.updateUser(id, new User(email, password));
+    }
+
+    @MutationMapping
+    public void deleteUser(@Argument("id") String id) {
+        userService.deleteUser(id);
     }
 
 }

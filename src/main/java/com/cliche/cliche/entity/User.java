@@ -1,4 +1,5 @@
 package com.cliche.cliche.entity;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Document
 @Data
@@ -25,9 +25,9 @@ public class User {
     @NotNull
     private String password;
 
-	public User(@NotNull String email, @NotNull String password) {
-		super();
-		this.email = email;
-		this.password = password;
-	}
+    public User(@NotNull String email, @NotNull String password) {
+        super();
+        this.email = email;
+        this.password = password;
+    }
 }

@@ -1,13 +1,16 @@
 type User {
-    id: ID!
-    email: String!
-    password: String!
+  id: ID!
+  email: String!
+  password: String!
 }
 
 type Query {
   userById(id: ID): User
+  userByEmail(email: String!, page: Int! = 1, size: Int! = 10): User
 }
 
 type Mutation {
-    createUser(email: String!, password: String!): User
+  createUser(email: String!, password: String!): User
+  updateUser(id: ID, email: String!, password: String!): User
+  deleteUser(id: ID): Boolean
 }

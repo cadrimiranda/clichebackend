@@ -1,4 +1,5 @@
 package com.cliche.cliche.service;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import com.cliche.cliche.repository.UserRepository;
 @Service
 @RequiredArgsConstructor
 public class UserService {
- 
-	@Autowired
+
+    @Autowired
     private UserRepository userRepository;
 
     public User createUser(User user) {
@@ -22,6 +23,10 @@ public class UserService {
 
     public User getUserById(String id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmailLike(email).orElse(null);
     }
 
     public User updateUser(String id, User userDetails) {
@@ -38,7 +43,7 @@ public class UserService {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
-    
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
