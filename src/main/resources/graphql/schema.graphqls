@@ -2,6 +2,18 @@ type User {
   id: ID!
   email: String!
   password: String!
+  userRole: String!
+}
+
+input UserRegisterInput {
+  email: String!
+  password: String!
+  userRole: String!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
 }
 
 type Query {
@@ -13,4 +25,7 @@ type Mutation {
   createUser(email: String!, password: String!): User
   updateUser(id: ID, email: String!, password: String!): User
   deleteUser(id: ID): Boolean
+
+  login(input: UserLoginInput!): Boolean
+  register(input: UserRegisterInput!): User
 }

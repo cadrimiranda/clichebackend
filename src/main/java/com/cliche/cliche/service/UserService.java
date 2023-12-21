@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
-import com.cliche.cliche.entity.User;
+import com.cliche.cliche.domain.user.User;
 import com.cliche.cliche.repository.UserRepository;
 
 @Service
