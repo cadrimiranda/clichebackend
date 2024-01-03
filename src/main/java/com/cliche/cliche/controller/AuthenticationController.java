@@ -3,6 +3,7 @@ package com.cliche.cliche.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,7 +20,7 @@ import com.cliche.cliche.repository.UserRepository;
 public class AuthenticationController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager;
 
     @Autowired
     UserRepository userRepository;
@@ -27,11 +28,11 @@ public class AuthenticationController {
     @Autowired
     TokenService tokenService;
 
-    @MutationMapping
+    @QueryMapping
     public LoginResponseDTO login(@Argument("input") AuthenticationDTO authenticationDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(authenticationDTO.email(),
                 authenticationDTO.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+        var auth = authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
@@ -40,13 +41,14 @@ public class AuthenticationController {
 
     @MutationMapping
     public User register(@Argument("input") RegisterDTO registerDTO) throws Exception {
-        if (this.userRepository.findByEmailLike(registerDTO.email()) != null) {
+        System.out.println(registerDTO.email() + "" + registerDTO.password());
+        if (!userRepository.findByEmailLike(registerDTO.email()).isEmpty()) {
             throw new Exception("Username in use");
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
-        User newUser = new User(registerDTO.email(), encryptedPassword, registerDTO.role());
+        User newUser = new User(registerDTO.email(), encryptedPassword, registerDTO.userRole());
 
-        return this.userRepository.save(newUser);
+        return userRepository.save(newUser);
     }
 }

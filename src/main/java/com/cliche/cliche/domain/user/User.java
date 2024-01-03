@@ -33,17 +33,18 @@ public class User implements UserDetails {
     private String password;
 
     @NotNull
-    private UserRole role;
+    private UserRole userRole;
 
-    public User(@NotNull String email, @NotNull String password) {
+    public User(@NotNull String email, @NotNull String password, @NotNull UserRole role) {
         super();
         this.email = email;
         this.password = password;
+        this.userRole = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == UserRole.ADMIN) {
+        if (this.userRole == UserRole.ADMIN) {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         } else {
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
@@ -75,6 +76,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(String email2, String encryptedPassword, UserRole role2) {
-    }
 }

@@ -7,6 +7,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import com.cliche.cliche.domain.user.User;
+import com.cliche.cliche.domain.user.UserRole;
 import com.cliche.cliche.service.UserService;
 
 @Controller
@@ -14,11 +15,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @MutationMapping
-    public User createUser(@Argument("email") String email, @Argument("password") String password) {
-        return userService.createUser(new User(email, password));
-    }
 
     @QueryMapping
     public User userById(@Argument("id") String id) {
@@ -33,7 +29,7 @@ public class UserController {
     @MutationMapping
     public User updateUser(@Argument("id") String id, @Argument("email") String email,
             @Argument("password") String password) {
-        return userService.updateUser(id, new User(email, password));
+        return userService.updateUser(id, new User(email, password, UserRole.USER));
     }
 
     @MutationMapping

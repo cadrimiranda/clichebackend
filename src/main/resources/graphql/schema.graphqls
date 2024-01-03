@@ -5,6 +5,10 @@ type User {
   userRole: String!
 }
 
+type LoginResponse {
+  token: String!
+}
+
 input UserRegisterInput {
   email: String!
   password: String!
@@ -18,7 +22,8 @@ input UserLoginInput {
 
 type Query {
   userById(id: ID): User
-  userByEmail(email: String!, page: Int! = 1, size: Int! = 10): User
+  userByEmail(email: String!): User
+  login(input: UserLoginInput!): LoginResponse
 }
 
 type Mutation {
@@ -26,6 +31,5 @@ type Mutation {
   updateUser(id: ID, email: String!, password: String!): User
   deleteUser(id: ID): Boolean
 
-  login(input: UserLoginInput!): Boolean
   register(input: UserRegisterInput!): User
 }
